@@ -1,26 +1,13 @@
+// set up login route 
 var routes;
 routes = function(app) {
   app.get('/login', function(req, res) {
+    // use __dirname to get full path to the file
     return res.render("" + __dirname + "/views/login", {
       title: 'Login',
       stylesheet: 'login'
     });
   });
-  app.post('/sessions', function(req, res) {
-    if (('piechef' === req.body.user) && ('12345' === req.body.password)) {
-      req.session.currentUser = req.body.user;
-      req.flash('info', "You are now logged in as " + req.session.currentUser + ".");
-      res.redirect('/admin/menu/stage');
-      return;
-    }
-    req.flash('error', 'Those credentials were incorrect. Please login again.');
-    return res.redirect('/login');
-  });
-  return app.del('/sessions', function(req, res) {
-    return req.session.regenerate(function(err) {
-      req.flash('info', 'You have been logged out.');
-      return res.redirect('/login');
-    });
-  });
 };
+
 module.exports = routes;
